@@ -1,70 +1,175 @@
-# Getting Started with Create React App
+# PropertyOwnership
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Different Operations In the App**
 
-## Available Scripts
+**1.Intialising Contract**
 
-In the project directory, you can run:
+**Output**
 
-### `npm start`
+- msg.sender is made as creatorAdmin
+- msg.sender is made as superAdmin
+- msg.sender is made as verified user
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**2.Create a new Property.**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**parameters**
 
-### `npm test`
+- CreateProperty- property Id, propoerty value, property owner address
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**prerequisites**
 
-### `npm run build`
+- msg.sender should be admin
+- property owner should be verified user
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Output**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ mark property Id, Status as Pending, propoerty value, property owner address
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**3.Approve the new Property.**
 
-### `npm run eject`
+**parameters**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- approveProperty- property Id
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**prerequisites**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- msg.sender should be superadmin
+- current owner should not be msg.sender
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Output**
 
-## Learn More
+mark property Satus as Approved
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**4.Reject the new Property.**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**parameters**
 
-### Code Splitting
+- rejectProperty- property Id
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**prerequisites**
 
-### Analyzing the Bundle Size
+- msg.sender should be superadmin
+- current owner should not be msg.sender
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Output** 
 
-### Making a Progressive Web App
+Mark property Satus as Rejected
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**5. Request Change of Ownership.**
 
-### Advanced Configuration
+**parameters**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- changeOwnership- property Id, new owner address
 
-### Deployment
+**prerequisites**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- msg.sender should be the current owner
+- new owner should be verified user
+- current owner is not the new owner
+- No pending ownership change request should exist.
 
-### `npm run build` fails to minify
+**Output**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+mark property Ownership change request
+
+**6.Approve change in Onwership.**
+
+**parameters**
+
+- ApproveChangeOwnership- property Id
+
+**prerequisites**
+
+- msg.sender should be superadmin
+- ownership change request must exist
+
+**Output**
+
+mark new owner address as current owner
+
+**7.Change the price of the property.**
+
+**parameters**
+
+- changeValue- propoerty Id, new property value
+
+**prerequisites**
+
+- msg.sender should be the current owner
+- No pending ownership change request should exist.
+
+**Output**
+
+change property value
+
+**8.Get the property details.**
+
+**parameters**
+
+- GetPropertyDetails- propoerty Id
+
+**Output**
+
+Status, propoerty value, property owner address
+
+**9.Add new user.**
+
+**parameters**
+
+- addNewUser- address
+
+**prerequisites**
+
+- msg.sender should be admin
+- No pending request for the address should exist.(user or admin or superadmin)
+- address should not be a verified user.(user or admin or superadmin)
+
+**Output**
+mark address as user
+
+**10.Add new admin.**
+
+**parameters**
+
+- AddNewAdmin- address
+
+**prerequisites**
+
+- msg.sender should be superadmin
+- No pending request for the address should exist.(user or admin or superadmin)
+- address should not be a verified user.(user or admin or superadmin)
+
+**Output**
+
+mark address as Admin
+
+**11.Add new SuperAdmin**
+
+**parameters**
+
+- addNewSuperAdmin- address
+
+**prerequisites**
+
+- msg.sender should be superadmin
+- No pending request for the address should exist.(user or admin or superadmin)
+- address should not be a verified user.(user or admin or superadmin)
+
+**Output**
+
+mark address as SuperAdmin
+
+**12. Approve Pending User.**
+
+**parameters**
+
+- approveUsers- address
+
+**prerequisites**
+
+- msg.sender should be superadmin
+- Pending request should exist for address
+
+**Output**
+
+mark address as Verified user
